@@ -1,0 +1,163 @@
+# i3blocks config file
+#
+# Please see man i3blocks for a complete reference!
+# The man page is also hosted at http://vivien.github.io/i3blocks
+#
+# List of valid properties:
+#
+# align
+# color
+# command
+# full_text
+# instance
+# interval
+# label
+# min_width
+# name
+# separator
+# separator_block_width
+# short_text
+# signal
+# urgent
+
+separator_block_width=20
+
+#[song]
+#command=~/.config/i3/i3blocks_scripts/scroll.sh -c get_song_name.sh -f terminus -d 0.2
+#label=
+#interval=repeat
+#color=#2ebd59
+#markup=pango
+
+#[Weather]
+#command=/usr/lib/i3blocks/iconicweather.sh "EUR|IT|IT007|ROMA"
+#interval=1800
+#color=#e97ac8
+
+[ssid]
+label=E: 
+#command=sudo ip netns exec phyns iw dev wlp4s0 link | grep SSID | cut -d " " -f 2-
+instance=enp2s0
+command=~/.config/i3/i3blocks_scripts/ip.sh
+markup=pango
+color=#32cd32
+interval=5
+
+
+[wireless]
+label=W: 
+#command=sudo ip netns exec phyns /usr/lib/i3blocks/iface
+instance=wlp3s0
+command=~/.config/i3/i3blocks_scripts/ip.sh
+markup=pango
+color=#32cd32
+interval=5
+separator=false
+
+[strength]
+#command=sudo ip netns exec phyns iw dev wlp4s0 link | grep signal | cut -d " " -f 2-
+command=echo "<span>$(iw dev wlp3s0 link | grep signal | cut -d " " -f 2-)</span>"
+markup=pango
+interval=10
+color=#98971a
+
+
+[download]
+label=D 
+command=~/.config/i3/i3blocks_scripts/bandwidth.sh rx
+markup=pango
+align=left
+min_width=D 10 kB/s
+color=#6495ed
+interval=1 # IMPORTANT
+separator=false
+
+[upload]
+label=U 
+command=~/.config/i3/i3blocks_scripts/bandwidth.sh tx
+markup=pango
+align=right
+min_width=U 10 kB/s
+color=#9370db
+interval=1 # IMPORTANT
+
+
+[bluetooth]
+#command=~/.config/i3/i3blocks_scripts/bluetooth.sh
+#interval=10
+
+
+[disk-root]
+label=DISK 
+command=~/.config/i3/i3blocks_scripts/disk.sh
+markup=pango
+interval=30
+color=#87ceeb
+separator=false
+
+[memory]
+label=RAM 
+command=~/.config/i3/i3blocks_scripts/memory.sh
+markup=pango
+min_width=RAM 10% [4.00G]
+align=right
+interval=5
+color=#48d1cc
+
+
+[cpu]
+label=CPU 
+command=~/.config/i3/i3blocks_scripts/cpu_usage.sh
+markup=pango
+min_width=CPU 10.00%
+interval=5
+color=#32cd32
+separator=false
+
+[temp]
+command=echo "$(sensors coretemp-isa-0000 | awk '/Package/ {print $4}' | sed 's/+\([0-9]*\).*/\1°C/' )"
+markup=pango
+interval=10
+color=#98971a
+
+[gpu]
+label=GPU 
+command=~/.config/i3/i3blocks_scripts/gpu_usage.sh
+markup=pango
+min_width=GPU 10% 10° 10%
+interval=5
+color=#228b22
+
+[battery]
+label=BAT 
+command=perl ~/.config/i3/i3blocks_scripts/battery.sh
+markup=pango
+min_width=100% DIS [01h00m]
+interval=5
+#color=#afeeee
+
+
+[brightness]
+label=VID 
+command=~/.config/i3/i3blocks_scripts/brightness.sh
+markup=pango
+interval=5
+color=#6495ed
+
+
+[volume]
+label=VOL 
+command=~/.config/i3/i3blocks_scripts/volume.sh
+markup=pango
+interval=5
+signal=10
+color=#7b68ee
+
+
+[time]
+#label=TIME
+command=~/.config/i3/i3blocks_scripts/time_calendar.sh
+markup=pango
+interval=5
+color=#50C878
+
