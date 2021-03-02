@@ -35,5 +35,6 @@ fi
 #setxkbmap -option caps:escape
 
 xset r rate 250 50
+feh --bg-scale ~/Pictures/WallPapers/black_wallpaper.jpg
 
 exec /usr/bin/i3

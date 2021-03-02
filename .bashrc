@@ -9,7 +9,7 @@ set -o vi
 
 export TERM=xterm-256color
 export EDITOR=vim
-export PATH=$PATH:/home/gerald/scripts
+export PATH=$PATH:/home/gerald/scripts:/home/gerald/.local/bin
 export HISTCONTROL=erasedups:ignorespace
 export HISTSIZE=10000 #in memory
 export HISTSIZE=10000 #in file
@@ -24,11 +24,15 @@ export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 run-help() { help "$READLINE_LINE" 2>/dev/null || man "$READLINE_LINE"; }
 bind -x '"\C-h": run-help' #Ctrl+h
 
-PS1='$? [\[\e[32;1m\]\u\[\e[0m\]\[\e[33;1m\]@\h\[\e[0m\] \[\e[34;1m\]\W\[\e[0m\]]$ '
+PS1='$? [\[\e[32;1m\]\u\[\e[0m\]\[\e[33;1m\]@\h\[\e[0m\] \[\e[34;1m\]\W\[\e[0m\]]\$ '
 PS2=' > '
 
 alias ls='ls --color=auto'
 alias l='ls -la -h -tr --group-directories-first'
+
+alias ip='ip -c'
+
+alias dude='du -h --max-depth=1'
 
 alias grep='grep --color=auto'
 
@@ -43,28 +47,43 @@ man() {
     command man "$@"
 }
 
-alias ethernet='sudo ip link set enp2s0 up && sudo dhcpcd enp2s0'
+alias ethernet='sudo ip link set enp5s0 up && sudo dhcpcd enp5s0'
 
 alias ethvpn='sudo openconnect -u fgraziano@student-net.ethz.ch -g student-net -k ETHZ.STUDENT-NET.VPN sslvpn.ethz.ch'
-alias leonhard='ssh -i ~/.ssh/eth_leonhard fgraziano@login.leonhard.ethz.ch'
 
-xournal() {
-	GTK_THEME=Adwaita:dark xournalpp "$@" &>/dev/null &
+mnt() {
+    sudo mount -o umask=022,uid=1000,gid=1000 /dev/"$1" ~/Documents/mnt
+}
+umnt() {
+    sudo umount ~/Documents/mnt
+    sync
+}
+
+kbd_backlight() {
+    echo $1 | sudo tee /sys/class/leds/tpacpi::kbd_backlight/brightness
 }
 
 alias keypass="keepassxc-cli clip -k ~/.ssh/gerald_dbkey ~/gerald_keys.kdbx"
 keyfn() {
-	keepassxc-cli "$1" -k ~/.ssh/gerald_dbkey ~/gerald_keys.kdbx "${@:2}"
+    keepassxc-cli "$1" -k ~/.ssh/gerald_dbkey ~/gerald_keys.kdbx "${@:2}"
 }
 
-ida32() {
-	wine ~/.wine/drive_c/Program\ Files/IDA\ 7.0/ida.exe "$@" &>/dev/null &
+xournal() {
+    GTK_THEME=Adwaita:dark xournalpp "$@" &>/dev/null &
 }
 
-ida64() {
-	wine ~/.wine/drive_c/Program\ Files/IDA\ 7.0/ida64.exe "$@" &>/dev/null &
-}
+#ida32() {
+#    wine ~/.wine/drive_c/Program\ Files/IDA\ 7.0/ida.exe "$@" &>/dev/null &
+#}
 
-alias pwn='source ~/VirtualEnv/pwn/bin/activate'
+#ida64() {
+#    wine ~/.wine/drive_c/Program\ Files/IDA\ 7.0/ida64.exe "$@" &>/dev/null &
+#}
+
 alias ml='source ~/VirtualEnv/ml/bin/activate'
+alias crypto='source ~/VirtualEnv/crypto/bin/activate'
+#alias pwn='source ~/VirtualEnv/pwn/bin/activate'
+
+alias zoom_docker='~/scripts/zoom-us-wrapper.sh  &>/dev/null &'
+
 

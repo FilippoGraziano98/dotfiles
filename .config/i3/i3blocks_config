@@ -37,7 +37,7 @@ separator_block_width=20
 [ssid]
 label=E: 
 #command=sudo ip netns exec phyns iw dev wlp4s0 link | grep SSID | cut -d " " -f 2-
-instance=enp2s0
+instance=enp5s0
 command=~/.config/i3/i3blocks_scripts/ip.sh
 markup=pango
 color=#32cd32
@@ -82,13 +82,14 @@ color=#9370db
 interval=1 # IMPORTANT
 
 
-[bluetooth]
+#[bluetooth]
 #command=~/.config/i3/i3blocks_scripts/bluetooth.sh
 #interval=10
 
 
 [disk-root]
 label=DISK 
+#instance=/
 command=~/.config/i3/i3blocks_scripts/disk.sh
 markup=pango
 interval=30
@@ -115,21 +116,21 @@ color=#32cd32
 separator=false
 
 [temp]
-command=echo "$(sensors coretemp-isa-0000 | awk '/Package/ {print $4}' | sed 's/+\([0-9]*\).*/\1°C/' )"
+command=echo "$(sensors thinkpad-isa-0000 | awk '/temp1:/ {print $2}' | sed 's/+\([0-9]*\).*/\1°C/' )"
 markup=pango
 interval=10
 color=#98971a
 
-[gpu]
-label=GPU 
-command=~/.config/i3/i3blocks_scripts/gpu_usage.sh
-markup=pango
-min_width=GPU 10% 10° 10%
-interval=5
-color=#228b22
+#[gpu]
+#label=GPU 
+#command=~/.config/i3/i3blocks_scripts/gpu_usage.sh
+#markup=pango
+#min_width=GPU 10% 10° 10%
+#interval=5
+#color=#228b22
 
 [battery]
-label=BAT 
+#label=BAT #added by script with markup
 command=perl ~/.config/i3/i3blocks_scripts/battery.sh
 markup=pango
 min_width=100% DIS [01h00m]

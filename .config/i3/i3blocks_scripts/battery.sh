@@ -13,6 +13,7 @@
 # (exit code 33) is set if there is less that 5% remaining.
 
 acpi_out=$(acpi -b)
+#acpi_out="Battery 0: Discharging, 15%, 00:22:31 remaining"
 
 num='[0-9^]+'
 str='[^0-9^]+'
@@ -43,29 +44,32 @@ elif [ "$status" = 'Charging' ]; then
 	full_text=$full_text" CHR ["$hrem"h"$mrem"m]"
 elif [ "$status" = 'Not charging' ]; then
 	full_text="$full_text NOT CHR"
+elif [ "$status" = 'Full' ]; then
+	full_text="$full_text FULL"
 fi
 
 # print text
-echo "$full_text"
+#echo "$full_text"
 
 # consider color and urgent flag only on discharge
 if [ "$status" = 'Discharging' ]; then
 
-	if [ $percent -le 20 ]; then 
-        echo ""
-		echo "#dc143c"
-	elif [ $percent -le 40 ]; then 
-        echo ""
-		echo "#ff6347"
-	elif [ $percent -le 60 ]; then 
-        echo ""
-		echo "#98971a"
-	fi
-
 	if [ $percent -le 10 ]; then 
+        echo "BAT $full_text"
 		notify-send -u critical -t 5000 "I don't wanna die"
 		exit 33
-	fi
+    elif [ $percent -le 20 ]; then 
+        echo "<span foreground='#dc143c'>BAT $full_text</span>"
+    elif [ $percent -le 40 ]; then 
+        echo "<span foreground='#ff6347'>BAT $full_text</span>"
+    elif [ $percent -le 60 ]; then 
+        echo "<span foreground='#98971a'>BAT $full_text</span>"
+    else
+        echo "BAT $full_text"
+    fi
+
+else
+    echo "BAT $full_text"
 fi
 
 exit 0 

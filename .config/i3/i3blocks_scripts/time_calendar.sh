@@ -9,7 +9,7 @@ case $BLOCK_BUTTON in
 		#posY=$(($BLOCK_Y - $HEIGHT))
 		posX=$((1920 - 25 - $WIDTH))
 		posY=$((1080 - 15 - $HEIGHT))
-		i3-msg -q "exec yad --calendar  --width=$WIDTH --height=$HEIGHT  --undecorated --fixed  --close-on-unfocus --no-buttons  --posx=$posX --posy=$posY  > /dev/null"
+		i3-msg -q "exec GTK_THEME=Adwaita:dark yad --calendar  --width=$WIDTH --height=$HEIGHT  --undecorated --fixed  --close-on-unfocus --no-buttons  --posx=$posX --posy=$posY  > /dev/null"
 		;;
 	3) #right click
 		notify-send "TODO" "$(calcurse -Q --days 2)" 

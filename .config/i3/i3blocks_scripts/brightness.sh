@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 brightness() {
-	xbacklight -get | sed -E 's/([0-9]{1,3})\.[^ ]*/\1/g'
+	light -G | sed -E 's/([0-9]{1,3})\.[^ ]*/\1/g'
 }
 
 format() {
@@ -16,19 +16,19 @@ format() {
 case $BLOCK_BUTTON in
 	3)
 		# right click, set to `20
-		xbacklight -set 20
+		light -S 20
 		notify-send -c "brightness" --urgency=low "screen brightness" "set 20%"
 		;;
 
 	4)
 		# scroll up, raise brightness
-		xbacklight -inc 10
+		light -A 10
 		notify-send -c "brightness" --urgency=low "screen brightness" "\+10% : $(brightness)%"
 		;;
 
 	5)
 		# scroll down, lower brightness
-		xbacklight -dec 10
+		light -U 10
 		notify-send -c "brightness" --urgency=low "screen brightness" "\-10% : $(brightness)%"
 		;;
 esac
