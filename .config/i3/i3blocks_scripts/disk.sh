@@ -18,7 +18,9 @@ case $BLOCK_BUTTON in
     # click: show directories
     1 | 2 | 3) 
 
-    summary=$(du -h -t 1000000000 --max-depth=1 ~ | sort -hr)
+    summary_root=$(du -h -t 1000000000 --max-depth=1 / | sort -hr)
+    summary_home=$(du -h -t 1000000000 --max-depth=1 ~ | sort -hr)
+    summary=$summary_root"\n\n"$summary_home
     notify-send "Top DISK-eaters" "$summary"
     ;;
 esac
@@ -47,7 +49,7 @@ END {
 	gsub(/%$/,"",use)
 	if (100 - use < alert_low) {
 		# color
-		print "#FF0000"
+		#print "#FF0000"
 	}
 }
 '
